@@ -303,9 +303,14 @@ class BLASSuite extends SparkFunSuite {
     val y14 = y1.copy
     val y15 = y1.copy
     val y16 = y1.copy
+    val y17 = y1.copy
+    val y18 = y1.copy
+    val y19 = y1.copy
+    val y20 = y1.copy
 
     val expected2 = new DenseVector(Array(6.0, 7.0, 4.0, 9.0))
     val expected3 = new DenseVector(Array(10.0, 8.0, 6.0, 18.0))
+    val expected4 = new DenseVector(Array(5.0, 15.0, 5.0, 0.0))
 
     gemv(1.0, dA, dx, 2.0, y1)
     gemv(1.0, sA, dx, 2.0, y2)
@@ -327,6 +332,11 @@ class BLASSuite extends SparkFunSuite {
     gemv(2.0, dA2, sx, 2.0, y15)
     gemv(2.0, sA2, sx, 2.0, y16)
 
+    gemv(0.0, dA, dx, 5.0, y17)
+    gemv(0.0, sA, dx, 5.0, y18)
+    gemv(0.0, dA, sx, 5.0, y19)
+    gemv(0.0, sA, sx, 5.0, y20)
+
     assert(y1 ~== expected2 absTol 1e-15)
     assert(y2 ~== expected2 absTol 1e-15)
     assert(y3 ~== expected2 absTol 1e-15)
@@ -346,6 +356,11 @@ class BLASSuite extends SparkFunSuite {
     assert(y14 ~== expected3 absTol 1e-15)
     assert(y15 ~== expected3 absTol 1e-15)
     assert(y16 ~== expected3 absTol 1e-15)
+
+    assert(y17 ~== expected4 absTol 1e-15)
+    assert(y18 ~== expected4 absTol 1e-15)
+    assert(y19 ~== expected4 absTol 1e-15)
+    assert(y20 ~== expected4 absTol 1e-15)
 
     withClue("columns of A don't match the rows of B") {
       intercept[Exception] {
